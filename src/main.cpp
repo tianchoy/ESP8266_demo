@@ -18,6 +18,7 @@ const char *password = "51810543"; // WIFI密码
 
 Adafruit_SSD1306 oled(128, 64, &Wire, -1);
 
+//oled 显示屏
 void OLED_DISPLAY()
 {
   oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
