@@ -3,6 +3,8 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>
 
 int LED_Green = 13;  // D7
 int LED_Red = 15;    // D8
@@ -18,7 +20,11 @@ const char *password = "51810543"; // WIFI密码
 
 Adafruit_SSD1306 oled(128, 64, &Wire, -1);
 
-//oled 显示屏
+// 实例化 WiFiManager
+
+WiFiManager wm;
+
+// oled 显示屏
 void OLED_DISPLAY()
 {
   oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -52,6 +58,7 @@ void setup()
   // put your setup code here, to run once:
   Serial.begin(9600);
 
+  wm.autoConnect("AutoConnectAP");
   /*
     红绿灯设置输出
   */
@@ -86,7 +93,7 @@ void lightFun(int LightType)
 void loop()
 {
   // put your main code here, to run repeatedly:
-
+  // 判断灯的颜色
   if (light == 0)
   {
     lightFun(LED_Green);
@@ -98,6 +105,7 @@ void loop()
     light = 0;
   }
 
+  // 读取光耦的状态
   GuangOuState = digitalRead(GuangOu);
 
   if (GuangOuState == 0)
